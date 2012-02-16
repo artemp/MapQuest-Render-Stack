@@ -25,7 +25,6 @@
 
 # import all the renderers
 import mapnik
-import mapware
 import terrain
 import aerial
 import composite
@@ -106,9 +105,6 @@ class RendererFactory:
                	# teh uglies. to be refactored. and not only because the keys are downcased...
                 if polygon != "default_style" and polygon != "mask_style" and polygon != "system":
        	            renderer.add_region(polygon, style, polygon)
-
-        elif rendering_system == 'mapware':
-            renderer = mapware.Renderer(config.get(style_name, "mw_config"))
 
         elif rendering_system == 'terrain':
             renderer = terrain.Renderer(config.get(style_name, "tr_config"))

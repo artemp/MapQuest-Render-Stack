@@ -4,9 +4,6 @@ bin_PROGRAMS = tile_handler tile_broker broker_ctl expire_tiles tile_submitter
 lib_LTLIBRARIES = \
 	librendermq_logging.la librendermq_proto.la librendermq_dqueue.la \
 	librendermq_http.la librendermq_storage.la 
-if WANT_MAPWARE_TILER
-lib_LTLIBRARIES += libmapware_tiler.la
-endif
 
 BOOST_LIBS=$(BOOST_LDFLAGS) \
 	$(BOOST_DATE_TIME_LIB) \
@@ -59,7 +56,6 @@ librendermq_http_la_LIBADD = $(DEPS_LIBS) $(BOOST_LIBS)
 
 librendermq_storage_la_SOURCES = \
 	image/image.cpp \
-	storage/hss_storage.cpp \
 	storage/simple_http_storage.cpp \
 	storage/null_storage.cpp \
 	storage/compositing_storage.cpp \
@@ -73,9 +69,6 @@ librendermq_storage_la_SOURCES = \
 	storage/lts_storage.cpp 
 librendermq_storage_la_CPPFLAGS = $(DEPS_CFLAGS) $(BOOST_CPPFLAGS)
 librendermq_storage_la_LIBADD = $(DEPS_LIBS) $(BOOST_LIBS) librendermq_proto.la librendermq_http.la
-
-libmapware_tiler_la_SOURCES = \
-	mapwareTiler.cpp
 
 tile_handler_SOURCES = \
 	mongrel_request.cpp \
@@ -134,7 +127,6 @@ tile_submitter_LDADD = \
 	librendermq_storage.la \
 	$(DEPS_LIBS) $(BOOST_LIBS) 
 
-#	mapwareTiler_python.cpp \
 #	storage/tile_storage_python.cpp \
 #	dqueue/distributed_queue_python.cpp \
 #	logging/python.cpp
