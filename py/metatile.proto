@@ -1,0 +1,23 @@
+message MetaTile {
+  required int64 clientid = 1;
+  required int32 x = 2;
+  required int32 y = 3;
+  required int32 z = 4;
+  required int32 priority = 5;
+  optional int32 gid = 6;
+}
+
+enum RenderResponseCode {
+	ERROR = 0;
+	SUCCESS = 3;
+}
+
+message MetaTileResponse {
+  required int64 clientid = 1;
+  required int32 x = 2;
+  required int32 y = 3;
+  required int32 z = 4;
+  required RenderResponseCode type = 5 [default = ERROR];
+  optional int32 gid = 6;
+}
+

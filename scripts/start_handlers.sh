@@ -1,0 +1,2 @@
+nohup /mqdata/render_stack/rendermq/bin/gcc-4.1.2/release/tile_handler -u HANDLER-1 -c /srv/planet/config/tile_handler.conf -C /srv/planet/config/dqueue.conf >& /srv/planet/mongrel2/logs/tile_handler-1.log &
+nohup /mqdata/render_stack/rendermq/bin/gcc-4.1.2/release/tile_handler -u HANDLER-2 -c /srv/planet/config/tile_handler.conf -C /srv/planet/config/dqueue.conf >& /srv/planet/mongrel2/logs/tile_handler-2.log &

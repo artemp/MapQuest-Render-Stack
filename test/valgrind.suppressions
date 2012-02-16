@@ -1,0 +1,30 @@
+#
+# how to use: find your valgrind's default.supp suppressions file
+# and copy it somewhere. append this file to the end and run 
+# valgrind with the --suppressions=<that file> to ignore the most
+# common non-errors.
+# 
+
+##
+# this one masks out the allocations that google protobuffers does 
+# to statically allocate space for the protobuf "database" used to
+# decode protobuf messages.
+{
+   Google protobuf
+   Memcheck:Leak
+   fun:_Znwm
+   ...
+   fun:_ZN6google8protobuf24SimpleDescriptorDatabase15DescriptorIndexISt4pairIPKviEE7AddFileERKNS0_19FileDescriptorProtoES6_
+}
+
+##
+# ZeroMQ does some dodgy stuff in order to be "fast", such as using
+# what valgrind reckons is uninitialised memory. this disables that
+# check.
+{
+   zeromq optimizations
+   Memcheck:Param
+   socketcall.sendto(msg)
+   fun:send
+   fun:_ZN3zmq9mailbox_t4sendERKNS_9command_tE
+}

@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Traffic statistics for LTS Node</title>
+  </head>
+  <body>
+    <h2>Now</h2>
+    <table>
+      <tr><th>Method</th><th>Number</th><th>Average duration</th><th>Standard deviation</th></tr>
+      <tr><td>GET </td><td>${gets_now_n}</td><td>${gets_now_avg}</td><td>${gets_now_dev}</td></tr>
+      <tr><td>POST </td><td>${posts_now_n}</td><td>${posts_now_avg}</td><td>${posts_now_dev}</td></tr>
+    </table>
+    <h2>Over Last 5 Minutes</h2>
+    <table>
+      <tr><th>Method</th><th>Number</th><th>Average duration</th><th>Standard deviation</th></tr>
+      <tr><td>GET </td><td>${gets_5min_n}</td><td>${gets_5min_avg}</td><td>${gets_5min_dev}</td></tr>
+      <tr><td>POST </td><td>${posts_5min_n}</td><td>${posts_5min_avg}</td><td>${posts_5min_dev}</td></tr>
+    </table>
+    <h2>Over Last Hour</h2>
+    <table>
+      <tr><th>Method</th><th>Number</th><th>Average duration</th><th>Standard deviation</th></tr>
+      <tr><td>GET </td><td>${gets_hour_n}</td><td>${gets_hour_avg}</td><td>${gets_hour_dev}</td></tr>
+      <tr><td>POST </td><td>${posts_hour_n}</td><td>${posts_hour_avg}</td><td>${posts_hour_dev}</td></tr>
+    </table>
+    <h2>Status</h2>
+    <table>
+     <tr><th>Functionality</th><th>Rating</th></tr>
+     <tr><td>GET </td><td>${get_status}</td></tr>
+     <tr><td>POST </td><td>${post_status}</td></tr>
+    </table>
+  </body>
+</html>

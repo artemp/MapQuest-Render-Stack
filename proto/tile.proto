@@ -1,0 +1,67 @@
+package rendermq.proto;
+
+/* Tile description and data. 
+ *
+ * This is the fundamental data structure which is passed between
+ * components of the system - both in the handling of requests and the
+ * passing back of responses. This means there's a lot of fields in
+ * this definition which don't make a lot of sense in one or other of
+ * the request or response. On the other hand, there's a lot of
+ * commonality between the request and response, so it's not clear at
+ * this point whether it would be worth splitting this into several
+ * messages.
+ */
+message tile {
+	 /* This sort of means "message type". See tile_protocol.hpp for
+		* more details about what each enum value actually does.
+		*/
+	 enum protoCmd {
+			cmdIgnore = 0;
+			cmdRender = 1;
+			cmdDirty = 2;
+			cmdDone = 3;
+			cmdNotDone = 4;
+			cmdRenderPrio = 5;
+			cmdRenderBulk = 6;
+			cmdStatus = 7;
+	 }
+	 
+	 // Command / "message type" enum.
+	 required int32 command = 1;
+
+	 // The location of the tile (or metatile) in the google-ish x,y,z
+	 // format.
+	 required int32 x = 2;
+	 required int32 y = 3;
+	 required int32 z = 4;
+
+	 // The ID of the client which requested this render. Note that this
+	 // is allocated by Mongrel2, and should not be modified unless you
+	 // want clients to start hanging.
+	 required int32 id = 5;
+
+	 // Optional image, or metatile encoded image(s). This is only used
+	 // in the response (from the worker to the broker, metatile
+	 // encoded. from the broker to the handler, image format data). See
+	 // the format flags below.
+	 optional bytes image = 6;
+	 
+	 // Names the rendering style to be used. This is just a string, and
+	 // it is up to the worker to determine what that string means.
+	 required string style = 7;
+
+	 // Bitmask of formats which are being requested or returned. 
+   // Between the handler and broker, there's only one bit set. 
+   // Between the worker and the broker that may have been collapsed,
+   // as the worker renders into multiple formats simultaneously.
+	 required int32 format = 8;
+
+	 // Last modified time of the image data included in this message,
+	 // if appropriate.
+	 optional uint64 last_modified = 9;
+
+	 // If the client set a "Last-Modified" header, that state is passed
+	 // in here and must be maintained throughout the lifetime of the
+	 // message. This allows the handler to be nearly stateless.
+	 optional uint64 request_last_modified = 10;
+}
