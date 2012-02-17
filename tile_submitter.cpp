@@ -24,7 +24,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "version.hpp"
+#include "config.hpp"
 #include "tile_protocol.hpp"
 #include "logging/logger.hpp"
 #include "dqueue/distributed_queue.hpp"
