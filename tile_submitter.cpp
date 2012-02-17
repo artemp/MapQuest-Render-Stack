@@ -24,7 +24,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "config.hpp"
+#include "version.hpp"
 #include "tile_protocol.hpp"
 #include "logging/logger.hpp"
 #include "dqueue/distributed_queue.hpp"
@@ -138,16 +138,12 @@ void enqueue_tiles(shared_ptr<bunch_of_tiles> tiles,
 
       // loop while the queue is long, waiting for an opportunity
       // to insert this tile...
-      if (!queue_short)
+      while (!queue_short)
       {
-         while (!queue_short)
-         {
-            // wait until something happens
-            runner_poll(runner, -1);
-            queue_short = runner.queue_length() < short_queue_length;
-         }
+         // wait until something happens
+         runner_poll(runner, -1);
+         queue_short = runner.queue_length() < short_queue_length;
       }
-
 
       //submit this tile
       tile_protocol tile(mtile.get());
@@ -184,6 +180,7 @@ void enqueue_tiles(shared_ptr<bunch_of_tiles> tiles,
       while (bt::microsec_clock::local_time() < wait_until)
       {
          runner_poll(runner, pause_time);
+         queue_short = runner.queue_length() < short_queue_length;
       }
    }
 }
